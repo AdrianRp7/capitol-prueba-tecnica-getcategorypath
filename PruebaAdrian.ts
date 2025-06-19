@@ -1,5 +1,10 @@
 //Prueba entregada por Adrián Ródenas Picó el día 19/06/2025
 
+interface Category {
+    name: string,
+    subcategories: Category[],
+}
+
 const categories = [
     {
         name: 'category1',
@@ -36,12 +41,12 @@ const categories = [
 //Then, it returns a string with each occurrence separated by commas and "\n" (Below are example data for this case)
 
 // TO-DO: Implement this function
-const getCategoryPath = (categories, categoryName) => {
-    const getArrayCategoryPaths = (categories, categoryName) => {
-        let paths = [];
+const getCategoryPath = (categories: Category[], categoryName: string): string => {
+    const getArrayCategoryPaths = (categories: Category[], categoryName: string): string[] => {
+        let paths: string[] = [];
         for(let {name, subcategories} of categories) {
             if(subcategories.length > 0) {
-                let result = getArrayCategoryPaths(subcategories, categoryName);
+                let result: string[] = getArrayCategoryPaths(subcategories, categoryName);
                 if(result.length !== 0) {
                     paths.push(...result.map(path => (`/${name}${path}`)))
                 }
@@ -53,56 +58,10 @@ const getCategoryPath = (categories, categoryName) => {
         return paths
     }
 
-    const result = getArrayCategoryPaths(categories, categoryName).join(",\n");
+    const result: string = getArrayCategoryPaths(categories, categoryName).join(",\n");
 
     return result.length !== 0 ? result : `Not found ${categoryName}`;
 };
 
-// OUTPUT SAMPLES
-console.log(getCategoryPath(categories, 'category4')); // should output: '/category1/category3/category4'
-console.log(getCategoryPath(categories, 'category2')); // should output: '/category1/category2'
-console.log(getCategoryPath(categories, 'category5')); // should output: '/category5'
-console.log(getCategoryPath(categories, 'category10')); // should output: ''
 
-// const categories = [
-//     {
-//         name: 'category1',
-//         subcategories: [
-//             {
-//                 name: 'category2',
-//                 subcategories: []
-//             },
-//             {
-//                 name: 'category3',
-//                 subcategories: [
-//                     {
-//                         name: 'category4',
-//                         subcategories: []
-//                     },
-//                 ]
-//             }
-//         ]
-//     },
-//     {
-//         name: 'category4',
-//         subcategories: [
-//             {
-//                 name: 'category4',
-//                 subcategories: []
-//             },
-//             {
-//                 name: 'category2',
-//                 subcategories: [
-//                     {
-//                         name: 'category4',
-//                         subcategories: []
-//                     },
-//                 ]
-//             },
-//         ]
-//     },
-//     {
-//         name: 'category5',
-//         subcategories: []
-//     }
-// ];
+export {getCategoryPath, Category}
